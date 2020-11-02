@@ -1,0 +1,9 @@
+const REQUEST_REGISTER = "REG/Request";
+const SUCCESS_REGISTER = "REG/Success"
+const FAIL_REGISTER = "REG/Fail"
+
+export {
+    REQUEST_REGISTER,
+    SUCCESS_REGISTER,
+    FAIL_REGISTER
+}
