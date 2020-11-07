@@ -1,19 +1,19 @@
 
-import {SUCCESS_REGISTER , FAIL_REGISTER} from '../actions/Reg/registreTypes';
+import {SUCCESS_OTP , FAIL_OTP} from '../actions/OTP/OTPTypes';
 const initialState = {
     token: null,
     error: null
 };
 
-const postReducer = function post(state = initialState , action) {
+const OTPReducer = function post(state = initialState , action) {
     switch(action.type) {
         
-        case SUCCESS_REGISTER: 
+        case SUCCESS_OTP: 
         return {
             ...state,
             token: action.payLoad
         }
-    case FAIL_REGISTER :{
+    case FAIL_OTP :{
         return{
             ...state,
             error: action.payLoad.response.data.error.message
@@ -24,4 +24,4 @@ const postReducer = function post(state = initialState , action) {
     }
 }
 
-export default postReducer
+export default OTPReducer

@@ -30,7 +30,7 @@ export default class signUP extends Component {
   validateMobile() {
     const { mobile } = this.state
     let test = /^\d+$/;
-    const mobileValid = (mobile.length == 10) && test.test(mobile);
+    const mobileValid = (mobile.length == 9) && test.test(mobile);
     LayoutAnimation.easeInEaseOut()
     this.setState({ mobileValid })
     //mobileValid || this.mobileInput.shake();
@@ -102,7 +102,7 @@ export default class signUP extends Component {
               fontFamily: "uber-r"
             }}
             keyboardType="phone-pad"
-            maxLength={10}
+            maxLength={9}
             placeholderTextColor={Color.steel}
             placeholder="Mobile number"
             underlineColorAndroid={"transparent"}

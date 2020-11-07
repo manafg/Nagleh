@@ -5,9 +5,17 @@ import { createStackNavigator } from 'react-navigation-stack'
 import Registration from '../screens/Registration/Registration'
 import Profile from '../screens/Profile/Profile'
 import SideMenu from '../components/SideMenu';
+import OTP from '../screens/OTP';
+import Home from '../screens/Home'
 
 //app stack for user end
     export const AppStack = {
+        OTP: {
+            screen: OTP,
+            navigationOptions:{
+                header:null
+            }
+        },
         Registration:{
             screen: Registration,
             navigationOptions:{
@@ -17,6 +25,12 @@ import SideMenu from '../components/SideMenu';
         Profile:{
             screen: Profile,
             navigationOptions:{
+                header:null
+            }
+        },
+        Home: {
+            screen : Home,
+            navigationOptions: {
                 header:null
             }
         }
@@ -29,7 +43,13 @@ import SideMenu from '../components/SideMenu';
             navigationOptions:{
                 header:null
             }
-        }
+        },
+        OTP: {
+            screen: OTP,
+            navigationOptions:{
+                header:null
+            }
+        },
            
     },{
         initialRouteName: 'Registration',

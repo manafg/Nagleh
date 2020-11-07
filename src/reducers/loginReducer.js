@@ -1,19 +1,19 @@
 
-import {SUCCESS_REGISTER , FAIL_REGISTER} from '../actions/Reg/registreTypes';
+import {SUCCESS_LOGIN , FAIL_LOGIN} from '../actions/Login/LoginTypes';
 const initialState = {
     token: null,
     error: null
 };
 
-const postReducer = function post(state = initialState , action) {
+const lgoinReducer = function post(state = initialState , action) {
     switch(action.type) {
         
-        case SUCCESS_REGISTER: 
+        case SUCCESS_LOGIN: 
         return {
             ...state,
             token: action.payLoad
         }
-    case FAIL_REGISTER :{
+    case FAIL_LOGIN :{
         return{
             ...state,
             error: action.payLoad.response.data.error.message
@@ -24,4 +24,4 @@ const postReducer = function post(state = initialState , action) {
     }
 }
 
-export default postReducer
+export default lgoinReducer

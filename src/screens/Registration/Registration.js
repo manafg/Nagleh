@@ -19,7 +19,9 @@ import Tab2 from "./SignIn";
 import Color from "../../Config/Color";
 import style from './style';
 import {connect} from "react-redux";
-import {requestRegister} from '../../actions/Reg/registerAction'
+import {requestRegister} from '../../actions/Reg/registerAction';
+import {requestLogin} from '../../actions/Login/LoginActions';
+
  class Registration extends Component {
 
   constructor(props) {
@@ -27,7 +29,9 @@ import {requestRegister} from '../../actions/Reg/registerAction'
     this.state = {
       showModal:false,
       typeOfErr:'',
-      message: ''
+      message: '',
+      fromToggle: false,
+      mobile : ''
     };
   }
 
@@ -39,15 +43,30 @@ import {requestRegister} from '../../actions/Reg/registerAction'
     this.props.register(obj);
   }
 
-  componentWillReceiveProps(props) {
-    debugger
-    if(props.err) {
-      this.setState({showModal:true , typeOfErr : 'Error' , message: props.err })
+  
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.err ) {
+      return {showModal: !prevState.fromToggle , typeOfErr : 'Error' , message: nextProps.err }
+    } 
+    if(nextProps.loginSucess?.status == '200') {
+      nextProps.navigation.navigate("OTP", { mobile: prevState.mobile }) //, 
     }
   }
 
+  signIn(mobile) {
+    let obj = {
+      "phone": mobile
+    }
+    this.state.mobile = mobile;
+    this.props.login(obj)
+  }
+
+  toggleView() {
+    this.setState({fromToggle: true})
+  }
+  
   render() {
-    debugger
     return (
       <View style={[container.container]}>
         <StatusBar
@@ -90,7 +109,7 @@ import {requestRegister} from '../../actions/Reg/registerAction'
               margin: 10
             }}
           >
-          <NaglehModal isVisible ={this.state.showModal} header={this.state.typeOfErr} body={this.state.message} />
+          <NaglehModal toggleView={()=>this.toggleView()} isVisible ={this.state.showModal} header={this.state.typeOfErr} body={this.state.message} />
             <TouchableOpacity>
               <Text
                 style={{
@@ -161,7 +180,7 @@ import {requestRegister} from '../../actions/Reg/registerAction'
                   }}
                 >
                   <Tab2
-                    onPress={() => this.props.navigation.navigate("OTP")}
+                    onPress={(data) => this.signIn(data)}//this.props.navigation.navigate("OTP")}
                   />
                 </Tab>
               </Tabs>
@@ -174,12 +193,15 @@ import {requestRegister} from '../../actions/Reg/registerAction'
 }
 
 const mapStateToActions = {
-  register: requestRegister
+  register: requestRegister,
+  login: requestLogin
 } 
 
 const mapStateToProps = state => ({
   err: state.registerReducer.error,
   success:state.registerReducer.token,
+  loginSucess: state.lgoinReducer.token,
+  loginErr: state.lgoinReducer.error,
   state:state
 });
 
