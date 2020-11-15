@@ -16,7 +16,7 @@ const postReducer = function post(state = initialState , action) {
     case FAIL_REGISTER :{
         return{
             ...state,
-            error: action.payLoad.response.data.error.message
+            error: action.payLoad.response.data.error?.message
         }
     }
     default:

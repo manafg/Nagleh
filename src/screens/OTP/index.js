@@ -28,7 +28,7 @@ class index extends Component {
       typeOfErr:'',
       message: '',
       mobile : '',
-      fromToggle:false,
+      fromToggle:1,
     }
   }
 
@@ -53,17 +53,17 @@ class index extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) { 
-    if(nextProps.err) {
-      return {showModal: !prevState.fromToggle , typeOfErr : 'Error' , message: nextProps.err }
+    if(nextProps.err && !nextProps.success?.status) {
+      return {showModal: prevState.showModal !=  prevState.fromToggle ? true : false , typeOfErr : 'Error' , message: nextProps.err }
     }
     if(nextProps.success?.status == '200') {
-      Client.headers.Authorization = `Bearer ${token}`
+      Client.defaults.headers['Authorization'] = `Bearer ${nextProps.success.data.token}`
       nextProps.navigation.navigate("Home") //, 
     }
   }
 
   toggleView() {
-    this.setState({fromToggle: true})
+    this.setState({fromToggle: true })
   }
 
   render() {

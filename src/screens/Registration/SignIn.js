@@ -4,7 +4,7 @@ import container from "../../Styles/Container/style";
 import Color from "../../Config/Color";
 import Button from "../../components/Button/index";
 
-export default class signUP extends Component {
+export default class signIn extends Component {
 
   constructor(props) {
     super(props);
@@ -23,8 +23,11 @@ export default class signUP extends Component {
     return mobileValid
   }
 
-  signIn() {
-    this.props.onPress(this.state.mobile)
+  login() {
+    if (this.state.mobileValid) {
+      let mobile = '+962' +this.state.mobile
+      this.props.onPress(mobile)
+  }
   }
 
   render() {
@@ -32,9 +35,9 @@ export default class signUP extends Component {
       <KeyboardAvoidingView>
         <View style={{ marginVertical: 20, marginHorizontal: 15,}}>  
           <TextInput
-           ref={input => (this.mobileInput = input)}
-           onChangeText={mobile => this.setState({mobile},()=>this.validateMobile)}
-           defaultValue={this.state.mobile}
+          ref={input => (this.mobileInput = input)}
+          onChangeText={mobile => this.setState({mobile},()=>this.validateMobile())}
+          defaultValue={this.state.mobile}
             style={{
               borderColor: Color.steel,
               borderWidth: 0.5,
@@ -45,6 +48,7 @@ export default class signUP extends Component {
               paddingVertical: 7,
               fontFamily:'uber-r',
             }}
+            maxLength={9}
             placeholderTextColor={Color.steel}
             placeholder="Mobile number"
             underlineColorAndroid={"transparent"}
@@ -54,7 +58,7 @@ export default class signUP extends Component {
            { !this.state.mobileValid ? <Text style={{color:'red'}}>Invalid phone number</Text> : <Text>eg : +9627xxxxxxxx</Text>}
         </View>
      
-        <Button Text="Next" textStyle={{ fontSize: 15}} onPress={()=> this.signIn()}/>
+        <Button Text="Next" textStyle={{ fontSize: 15}} onPress={()=> { this.login()}}/>
    
       </KeyboardAvoidingView>
     );

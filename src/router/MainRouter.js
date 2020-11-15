@@ -7,6 +7,8 @@ import Profile from '../screens/Profile/Profile'
 import SideMenu from '../components/SideMenu';
 import OTP from '../screens/OTP';
 import Home from '../screens/Home'
+import SearchScreen from '../screens/SearchScreen'
+
 
 //app stack for user end
     export const AppStack = {
@@ -33,6 +35,11 @@ import Home from '../screens/Home'
             navigationOptions: {
                 header:null
             }
+        },
+       
+        SearchScreen:{
+            screen : SearchScreen,
+            navigationOptions : SearchScreen
         }
     }
 
@@ -49,7 +56,9 @@ import Home from '../screens/Home'
             navigationOptions:{
                 header:null
             }
-        },
+        }
+       
+      
            
     },{
         initialRouteName: 'Registration',

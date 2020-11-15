@@ -30,28 +30,41 @@ import {requestLogin} from '../../actions/Login/LoginActions';
       showModal:false,
       typeOfErr:'',
       message: '',
-      fromToggle: false,
-      mobile : ''
+      fromToggle: 1,
+      mobile : '',
+      tabActive: ''
     };
   }
 
   clickRegister(email, phone) {
     let obj = {
-      "phone":phone,
+      "phone":'+962'+phone,
       "email":email
     }
+    
+    this.state.mobile = '+962'+phone;
+    this.state.tabActive =  'signUp';
+
     this.props.register(obj);
   }
 
   
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if(nextProps.err ) {
-      return {showModal: !prevState.fromToggle , typeOfErr : 'Error' , message: nextProps.err }
-    } 
-    if(nextProps.loginSucess?.status == '200') {
+    if(nextProps.loginSucess?.status == '200' || nextProps.success?.status == "200") {
       nextProps.navigation.navigate("OTP", { mobile: prevState.mobile }) //, 
+      return;
     }
+
+    if(nextProps.loginErr && nextProps.loginSucess?.status != "200" && prevState.tabActive == 'signIn') {
+      return {showModal: prevState.showModal !=  prevState.fromToggle ? true : false , typeOfErr : 'Error' , message: nextProps.loginErr }
+    }
+
+    if( nextProps.err && nextProps.success?.status != "200" && prevState.tabActive == 'signUp') {
+      return {showModal: prevState.showModal !=  prevState.fromToggle ? true : false , typeOfErr : 'Error' , message: nextProps.err}
+    } 
+
+    
   }
 
   signIn(mobile) {
@@ -59,6 +72,7 @@ import {requestLogin} from '../../actions/Login/LoginActions';
       "phone": mobile
     }
     this.state.mobile = mobile;
+    this.state.tabActive =  'signIn';
     this.props.login(obj)
   }
 
