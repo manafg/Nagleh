@@ -20,50 +20,8 @@ class SearchScreen extends Component {
             this.props.requestUpdateDrop(details)
         }
         
-        // if (from == "where") {
-        //     let searchObj = {
-        //         searchData: data,
-        //         searchDetails: details,
-        //         searchFrom: from,
-        //         whereText: details.formatted_address,
-        //         dropText: this.state.dropText
-        //     }
-
-        //     let oldData = this.props.navigation.getParam('old');
-        //     oldData.wherelatitude = details.geometry.location.lat,
-        //         oldData.wherelongitude = details.geometry.location.lng,
-        //         oldData.whereText = details.formatted_address
-        //     if (pageName) {
-        //         this.props.navigation.state.params.searchData(searchObj, oldData);
-        //         this.props.navigation.dismiss();
-        //     } else {
-        //         this.props.navigation.goBack();
-        //         this.props.navigation.state.params.pres(searchObj, oldData);
-        //     }
-        // }
-        // else if (from == 'drop') {
-        //     let searchObj = {
-        //         searchData: data,
-        //         searchDetails: details,
-        //         searchFrom: from,
-        //         whereText: this.state.whereText,
-        //         dropText: details.formatted_address
-        //     }
-
-        //     let oldData = this.props.navigation.getParam('old');
-        //     oldData.droplatitude = details.geometry.location.lat,
-        //         oldData.droplongitude = details.geometry.location.lng,
-        //         oldData.droptext = details.formatted_address
-        //     if (pageName) {
-        //         this.props.navigation.goBack();
-        //         this.props.navigation.state.params.searchData(searchObj, oldData);
-        //     } else {
-        //         this.props.navigation.state.params.pres(searchObj, oldData);
-        //         this.props.navigation.goBack();
-        //     }
-        // }
-
     }
+    
     render() {
         return (
             <GooglePlacesAutocomplete

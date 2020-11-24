@@ -17,7 +17,7 @@ import Color from "../../Config/Color";
 
 
 const SelectDestination = (props) => {
-    return(
+    return  (
         <View style={SelectDestinationStyle.container}>
         <View style={SelectDestinationStyle.subContainerView}>
           <View style={{ margin: 30 }}>
@@ -47,7 +47,7 @@ const SelectDestination = (props) => {
           </View>
         </View>
       </View>
-    )
+    ) 
 }
 
 export default SelectDestination;

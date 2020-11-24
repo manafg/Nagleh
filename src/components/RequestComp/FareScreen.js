@@ -9,14 +9,13 @@ import SelectDestinationStyle from './SelectDestinationStyle'
 import RideType from "../../components/RideType/index";
 
 const FareScreen = (props) => {
-   let size = props.fareData.size == 'S' ? 'Small Truck' : 'Medium Truck' ;
     return (
         <View style={styles.container}>
           <View style={styles.subContainerView}>
             <View style={{ margin: 15 }}>
               <RideType
                 Source={require("../../Image/delivery-truck.png")}
-                RideType={size}
+                RideType="MEdium"
                 Price={`${Math.round(props.fareData.price)} JD`}
                 Distance="Truck Type"
                 priceText={{ color: Color.pink }}

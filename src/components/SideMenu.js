@@ -3,13 +3,11 @@ import React from 'react';
 import { Text, View, Dimensions, StyleSheet, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
-// import * as firebase from 'firebase'; //Database
 import SideMenuHeader from './SideMenuHeader';
-// import { colors } from '../common/theme';
+import {connect} from "react-redux";
 
 var { width,height } = Dimensions.get('window');
-
-export default class SideMenu extends React.Component{
+ class SideMenu extends React.Component{
     constructor(props){
         super(props);
        
@@ -18,10 +16,10 @@ export default class SideMenu extends React.Component{
            name:"",
             heightIphoneSix : false,
             sideMenuList: [
-                {key: 1, name: 'Book a Truck', navigationName: 'Map', icon: 'home', type: 'font-awesome', child: 'firstChild'},
+                {key: 1, name: 'Book a Truck', navigationName: 'Map', icon: 'map', type: 'font-awesome', child: 'firstChild'},
                 {key: 2, name: 'Move Furniture', navigationName: 'MovefurnitreLandingPage', icon: 'truck-delivery', type: 'material-community', child: 'firstChild'},
                 {key: 3, name: 'Profile Settings', navigationName: 'Profile', icon: 'ios-person-add', type: 'ionicon', child: 'secondChild'},
-                {key: 4, name: 'History', navigationName: 'RideList', icon: 'car-sports', type: 'material-community', child: 'thirdChild'},
+                {key: 4, name: 'History', navigationName: 'RideList', icon: 'history', type: 'material-community', child: 'thirdChild'},
                 {key: 6, name: 'Notification', navigationName: 'Notifications', icon: 'ios-notifications', type: 'ionicon', child: 'thirdChild'},
                 {key: 7, name: 'Payment', navigationName: 'SettingScreen', icon: 'settings', type: 'material-community', child: 'fourthChild'},
                 {key: 8, name: 'About Us',  navigationName: 'About', icon: 'info', type: 'entypo', child: 'sixthChild'},
@@ -40,11 +38,7 @@ export default class SideMenu extends React.Component{
             this.setState({name:res})
         })
         this.heightReponsive();
-        // var curuser = firebase.auth().currentUser.uid;
-        // const userData=firebase.database().ref('users/'+curuser);
-        // userData.on('value',userData=>{
-        //     this.setState(userData.val())
-        // })
+       
         this.tripSatusCheck()
     }
 
@@ -72,36 +66,14 @@ export default class SideMenu extends React.Component{
 
     //CHECKING TRIP END OR START
     tripSatusCheck(){
-        // var curuser = firebase.auth().currentUser;
-        //     this.setState({currentUser:curuser},()=>{
-        //         const userData=firebase.database().ref('users/'+this.state.currentUser.uid);
-        //         userData.on('value',userData=>{
-        //             if(userData.val()){
-        //                 data = userData.val()
-        //                 if(data['my-booking']){ 
-        //                     let bookingData = userData.val()['my-booking'] 
-        //                     for(key in bookingData){
-        //                         bookingData[key].bookingKey = key
-        //                         if(bookingData[key].payment_status){      
-        //                             if(bookingData[key].payment_status == "IN_PROGRESS" && bookingData[key].status == 'END' && bookingData[key].skip != true){
-        //                                 this.props.navigation.navigate('ratingPage',{data:bookingData[key]});
-        //                             }else if( bookingData[key].status == 'START'){
-        //                                 this.props.navigation.navigate('trackRide',{data:bookingData[key]});
-        //                              }
-        //                         }
-                                
-        //                     }
-        //                 }
-        //             }
-        //         })
-        //     })
+       
     }
 
 
     render(){
         return(
             <View style={styles.mainViewStyle}>
-                <SideMenuHeader  headerStyle={styles.myHeader} userPhoto={this.state.profile_image} userEmail={this.state.email} userName ={this.state.name} ></SideMenuHeader> 
+                <SideMenuHeader  headerStyle={styles.myHeader} userPhoto={this.props.userInfo.profile.profile_image} userEmail={this.props.userInfo.profile.name} userName ={this.props.userInfo.profile.name} ></SideMenuHeader> 
                 
                 <View style={styles.compViewStyle}>
                 <View style={[styles.vertialLine,{height: (width <= 320) ? width/1.53 : width/1.68 }]}></View>
@@ -123,7 +95,7 @@ export default class SideMenu extends React.Component{
                                 <Icon
                                     name={item.icon}
                                     type={item.type}
-                                    color={"#fff"}
+                                    color={"#000"}
                                     size={16}
                                     containerStyle={styles.iconStyle}
                                 />
@@ -142,6 +114,11 @@ export default class SideMenu extends React.Component{
         )
     }
 }
+ 
+  const mapStateToProps = state => ({
+    userInfo : state.OTPReducer.token.data
+  });
+export default connect(mapStateToProps ,null)(SideMenu)
 const styles = StyleSheet.create({
     myHeader:{
         marginTop:0,   
@@ -178,12 +155,12 @@ const styles = StyleSheet.create({
         width:"100%"
     },
     mainViewStyle:{
-        backgroundColor: "#fff", 
+        backgroundColor: "#000", 
         height: '100%'
     },
     compViewStyle:{
         position: 'relative', 
-        flex: 3
+        flex: 31
     },
     iconStyle:{ 
         justifyContent: 'center', 

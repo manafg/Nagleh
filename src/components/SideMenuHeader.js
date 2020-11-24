@@ -7,10 +7,10 @@ const SideMenuHeader = ({headerStyle,userPhoto,userName,userEmail}) =>{
    return (
         <View style={[styles.viewStyle,headerStyle]}>
             <View style={styles.userImageView} >
-                 {/* <Image 
-                    source={userPhoto == null?require('../../assets/images/profilePic.png'):{uri:userPhoto}}
+                 <Image 
+                    source={require('../Image/userThumb.png')}
                     style={styles.imageStyle}
-                /> */}
+                />
             </View>   
             <View style={styles.headerTextStyle}>
                 <Text style={styles.ProfileNameStyle}>{userName?userName.toUpperCase():""}</Text>
@@ -19,7 +19,7 @@ const SideMenuHeader = ({headerStyle,userPhoto,userName,userEmail}) =>{
                 <Icon 
                     name='mail-read'
                     type='octicon'
-                    color={'#fff'}
+                    color={'#000'}
                     size={16}
                 />
                 <Text style={styles.emailStyle}>{userEmail?userEmail.toLowerCase():""}</Text>
@@ -68,7 +68,7 @@ const styles = {
     },
     ProfileNameStyle:{
         fontWeight: 'bold', 
-        color: "#fff", 
+        color: "#000", 
         fontSize: 15
     },
     iconViewStyle:{
@@ -79,7 +79,7 @@ const styles = {
         marginTop: 4
     },
     emailStyle:{
-        color: "#fff", 
+        color: "#000", 
         fontSize: 13,
         marginLeft: 4,
         textAlign:'center'

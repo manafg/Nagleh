@@ -9,6 +9,7 @@ const OTPReducer = function post(state = initialState , action) {
     switch(action.type) {
         
         case SUCCESS_OTP: 
+        debugger
         return {
             ...state,
             token: action.payLoad

@@ -9,6 +9,7 @@ const lgoinReducer = function post(state = initialState , action) {
     switch(action.type) {
         
         case SUCCESS_LOGIN: 
+        debugger
         return {
             ...state,
             token: action.payLoad

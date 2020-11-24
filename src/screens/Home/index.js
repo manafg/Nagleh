@@ -3,7 +3,7 @@ import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion } from 'react-native-m
 import styles from "./style";
 import Color from "../../Config/Color";
 import MapViewDirections from 'react-native-maps-directions';
-import io from 'socket.io-client';
+var io = require("socket.io-client/dist/socket.io");
 import {
   Image,
   Text,
@@ -15,7 +15,7 @@ import {
   Platform
 } from "react-native";
 import { Drawer, Icon, Col } from "native-base";
-// import SideBar from "../../Screen/SideMenu/index";
+import SideMenu from "../../components/SideMenu";
 import Container from "../../Styles/Container/style";
 import IconText from "../../components/Icon2Text/index";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -25,22 +25,23 @@ import ConfiremRequest from '../../components/RequestComp/ConfiremRequest/Confir
 import FareScreen from '../../components/RequestComp/FareScreen';
 import FindingTruck from '../../components/RequestComp/LookingForTruck'
 import {connect} from "react-redux";
+import { DrawerActions } from 'react-navigation-drawer'
+
 import {requestUpdateStep , requestSelectType , requestFare , requestTrip} from '../../actions/Home/HomeActions'
 
 var { height, width } = Dimensions.get('window');
 
-const SOCKET_URL = 'https://nagleh.com/';
+const SOCKET_URL = 'https://nagleh.app';
 
 
 
  class index extends Component {
   constructor (props) {
     super(props);
-    this.socket = io(SOCKET_URL, {
-      path: '/socket.io',
-      pingTimeout: 6000000,
-      pingInterval: 30000
+    this.socket = io.connect('https://nagleh.app', {
+     path: '/socket.io',
   });
+    
     this.searchLocation = this.searchLocation.bind(this);
     this.region = {
       latitude: 31.963158,
@@ -54,7 +55,7 @@ const SOCKET_URL = 'https://nagleh.com/';
   }
   
   componentDidMount() {
-
+   
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -67,10 +68,8 @@ const SOCKET_URL = 'https://nagleh.com/';
 
 componentDidUpdate(){
   if(this.props.requestId) {
-    debugger
     this.socket.emit('join', this.props.fare.userId);
     this.socket.on('show_notification', (val) => {
-      debugger
    });
   }
   }
@@ -79,7 +78,7 @@ componentWillUnmount() {
 }
 
 join() {
-  this.socket.emit('join', this.props.fare.userId)
+ // this.socket.emit('join', this.props.fare.userId)
 }
 listen() {
     let self = this;
@@ -111,7 +110,6 @@ listen() {
   }
 
   renderTripComp () {
-    debugger
     switch(this.props.step) {
       case 1:
         return <SelectType  selectTruckType={this.selectTruckType}/>
@@ -134,14 +132,17 @@ listen() {
       longitudeDelta: 0.09921,
   }
     return (
-      <Drawer
-        ref={ref => {
-          this.drawer = ref;
-        }}
-        //content={<SideBar navigation={this.props.navigation} />}
-        onClose={() => this.drawer._root.close()}
-      >
+      // <Drawer
+      //   ref={ref => {
+      //     this.drawer = ref;
+      //   }}
+      //   content={<SideBar navigation={this.props.navigation} />} //this.props.navigation.dispatch(DrawerActions.toggleDrawer())
+      //   onClose={() => this.drawer._root.close()}
+      // >
         <View style={Container.container}>
+          <TouchableOpacity onPress={() => { this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }} style={{ zIndex: 999, position: 'absolute', top: 40, left: 20 }}>
+                    <Image style={{ width: 55, height: 55 }} source={require('../../Image/menu.png')} />
+            </TouchableOpacity>
           <StatusBar barStyle="dark-content" />
           <MapView
              provider={PROVIDER_GOOGLE}
@@ -203,24 +204,11 @@ listen() {
                 })
             }}
           >
-            <TouchableOpacity
-              style={{
-                position: "absolute",
-              }}
-              onPress={() => this.drawer._root.open()}
-            >
-              <Image
-                source={require("../../Image/menu.png")}
-                style={{
-                  width: 55,
-                  height: 55
-                }}
-              />
-            </TouchableOpacity>
+            
           </View>
          {this.renderTripComp()}
         </View>
-      </Drawer>
+      // </Drawer>
     );
   }
 }

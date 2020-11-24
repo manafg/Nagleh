@@ -164,11 +164,6 @@ class index extends Component {
               />
             </View>
             <View style={{marginHorizontal:38,marginVertical:75}}>
-              <Button
-                onPress={() => this.props.navigation.navigate("Home")}
-                Text="Verify"
-                viewStyle={{ backgroundColor: Color.black,}}
-              />
               </View>
           </View>
         </View>
